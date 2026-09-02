@@ -118,7 +118,7 @@ const latitude = 48.8566;
 const longitude = 2.3522;
 
 const weatherURL =
-`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Europe%2FParis`;
+`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FParis&models=meteofrance_seamless`;
 
 const weatherNames = {
     0: ["☀️", "Sunny"],
