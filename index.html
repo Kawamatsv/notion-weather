@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>♡ Kawaii Weather ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff5f8;
+    font-family: 'Quicksand', sans-serif;
+    color: #8f6675;
+}
+
+.weather-card {
+    width: 280px;
+    padding: 22px;
+    text-align: center;
+    background: rgba(255,255,255,0.75);
+    border: 2px solid #f7d6e2;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(230,160,185,0.18);
+}
+
+.city {
+    font-size: 15px;
+    font-weight: 600;
+    color: #d98ba9;
+    margin-bottom: 5px;
+}
+
+.weather-icon {
+    font-size: 55px;
+    margin: 4px 0;
+}
+
+.temperature {
+    font-size: 42px;
+    font-weight: 700;
+    color: #e49ab5;
+}
+
+.description {
+    font-size: 14px;
+    margin-top: -3px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #f3dbe4;
+    font-size: 12px;
+}
+
+.heart {
+    margin-top: 15px;
+    color: #eba7bd;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="weather-card">
+
+    <div class="city" id="city">
+        🌷 Chatou
+    </div>
+
+    <div class="weather-icon" id="icon">
+        🌸
+    </div>
+
+    <div class="temperature" id="temperature">
+        --°C
+    </div>
+
+    <div class="description" id="description">
+        loading...
+    </div>
+
+    <div class="details">
+        <div>
+            💧<br>
+            <span id="humidity">--%</span>
+        </div>
+
+        <div>
+            💨<br>
+            <span id="wind">-- km/h</span>
+        </div>
+    </div>
+
+    <div class="heart">
+        have a lovely day ♡
+    </div>
+
+</div>
+
+<script>
+
+const latitude = 48.8967;
+const longitude = 2.1569;
+
+const weatherURL =
+`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Europe%2FParis`;
+
+const weatherNames = {
+    0: ["☀️", "Sunny"],
+    1: ["🌤️", "Mostly sunny"],
+    2: ["⛅", "Partly cloudy"],
+    3: ["☁️", "Cloudy"],
+    45: ["🌫️", "Foggy"],
+    48: ["🌫️", "Foggy"],
+    51: ["🌦️", "Light drizzle"],
+    53: ["🌦️", "Drizzle"],
+    55: ["🌧️", "Heavy drizzle"],
+    61: ["🌧️", "Light rain"],
+    63: ["🌧️", "Rainy"],
+    65: ["🌧️", "Heavy rain"],
+    71: ["🌨️", "Light snow"],
+    73: ["❄️", "Snow"],
+    75: ["❄️", "Heavy snow"],
+    80: ["🌦️", "Rain showers"],
+    81: ["🌧️", "Rain showers"],
+    82: ["⛈️", "Heavy showers"],
+    95: ["⛈️", "Thunderstorm"],
+    96: ["⛈️", "Thunderstorm"],
+    99: ["⛈️", "Thunderstorm"]
+};
+
+fetch(weatherURL)
+.then(response => response.json())
+.then(data => {
+
+    const current = data.current;
+
+    const weather = weatherNames[current.weather_code] || ["🌸", "Lovely day"];
+
+    document.getElementById("temperature").textContent =
+        Math.round(current.temperature_2m) + "°C";
+
+    document.getElementById("icon").textContent =
+        weather[0];
+
+    document.getElementById("description").textContent =
+        weather[1];
+
+    document.getElementById("humidity").textContent =
+        current.relative_humidity_2m + "%";
+
+    document.getElementById("wind").textContent =
+        Math.round(current.wind_speed_10m) + " km/h";
+
+})
+.catch(() => {
+    document.getElementById("description").textContent =
+        "weather unavailable ♡";
+});
+
+</script>
+
+</body>
+</html>
