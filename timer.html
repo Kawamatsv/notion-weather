@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🍅 学习计时</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff5f8;
+    font-family: 'Quicksand', sans-serif;
+    color: #8f6675;
+}
+
+.timer-card {
+    width: 280px;
+    padding: 24px;
+    text-align: center;
+    background: rgba(255,255,255,0.8);
+    border: 2px solid #f7d6e2;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(230,160,185,0.18);
+}
+
+.tomato {
+    font-size: 48px;
+    margin-bottom: 4px;
+}
+
+.title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #d98ba9;
+    margin-bottom: 12px;
+}
+
+.time {
+    font-size: 42px;
+    font-weight: 700;
+    color: #e49ab5;
+    letter-spacing: 1px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+button {
+    border: none;
+    padding: 8px 13px;
+    border-radius: 15px;
+    background: #f9dce7;
+    color: #9a6879;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #f4cbd9;
+}
+
+.message {
+    margin-top: 15px;
+    color: #eba7bd;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="timer-card">
+
+    <div class="tomato">🍅</div>
+
+    <div class="title">
+        学习计时
+    </div>
+
+    <div class="time" id="time">
+        00:00:00
+    </div>
+
+    <div class="buttons">
+        <button onclick="startTimer()">开始</button>
+        <button onclick="pauseTimer()">暂停</button>
+        <button onclick="resetTimer()">重置</button>
+    </div>
+
+    <div class="message">
+        专心学习呀 ♡
+    </div>
+
+</div>
+
+<script>
+
+let seconds = 0;
+let timer = null;
+
+function updateDisplay() {
+
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    document.getElementById("time").textContent =
+        String(hours).padStart(2, "0") + ":" +
+        String(minutes).padStart(2, "0") + ":" +
+        String(secs).padStart(2, "0");
+}
+
+function startTimer() {
+
+    if (timer !== null) return;
+
+    timer = setInterval(() => {
+        seconds++;
+        updateDisplay();
+    }, 1000);
+}
+
+function pauseTimer() {
+
+    clearInterval(timer);
+    timer = null;
+}
+
+function resetTimer() {
+
+    clearInterval(timer);
+    timer = null;
+    seconds = 0;
+    updateDisplay();
+}
+
+</script>
+
+</body>
+</html>
